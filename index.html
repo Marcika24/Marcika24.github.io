@@ -108,33 +108,82 @@ h2.sec{
 .btn .dot{ width:8px; height:8px; border-radius:50%; background:var(--brass); }
 .btn--solid .dot{ background:var(--paper); }
 
-/* SoundCloud embed cards */
-.sc-card{
+/* Minimal music players */
+.player{
+  position:relative;
   border:1px solid var(--line-2);
   background:var(--paper-2);
-  padding:18px 18px 14px;
+  padding:22px 22px 20px;
   box-shadow:0 20px 60px -30px rgba(28,23,18,.4);
 }
-.sc-head{
-  font-family:var(--mono); font-size:.7rem; letter-spacing:.2em;
-  text-transform:uppercase; color:var(--ink-soft);
-  margin:0 0 14px; display:flex; justify-content:space-between; gap:12px;
+.player-engine{ position:absolute; left:-9999px; width:200px; height:200px; border:0; opacity:0; pointer-events:none; }
+.player-top{ display:flex; align-items:center; gap:16px; }
+.player-btn{
+  flex:none; width:46px; height:46px; border-radius:50%;
+  border:1px solid var(--brass); background:transparent; color:var(--brass);
+  display:grid; place-items:center; cursor:pointer; padding:0;
+  transition:background .25s ease, color .25s ease, border-color .25s ease;
 }
-.sc-head .name{ font-weight:bold; color:var(--brass); }
-.sc-frame{
-  display:block; width:100%; border:0; border-radius:4px;
-  background:#111;
-}
-.sc-credit{
-  font-size:10px; color:#cccccc; line-break:anywhere; word-break:normal;
-  overflow:hidden; white-space:nowrap; text-overflow:ellipsis;
-  font-family:Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif;
-  font-weight:100; margin-top:10px;
-}
-.sc-credit a{ color:#cccccc; text-decoration:none; }
-.sc-credit a:hover{ color:var(--red); }
+.player-btn:hover{ background:var(--brass); color:var(--paper); }
+.player.is-playing .player-btn{ border-color:var(--red); color:var(--red); }
+.player-btn svg{ width:15px; height:15px; }
+.player-meta{ flex:1; min-width:0; }
+.player-label{ font-family:var(--mono); font-size:.66rem; letter-spacing:.22em; text-transform:uppercase; color:var(--ink-soft); }
+.player-title{ font-family:var(--serif); font-size:1.15rem; font-weight:600; margin:3px 0 0; color:var(--ink); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.player-time{ font-family:var(--mono); font-size:.72rem; color:var(--ink-2); margin-left:auto; white-space:nowrap; }
+.player-bar{ position:relative; height:14px; margin:16px 0 0; cursor:pointer; }
+.player-bar::before{ content:""; position:absolute; left:0; right:0; top:50%; height:2px; transform:translateY(-50%); background:var(--line-2); }
+.player-bar .fill{ position:absolute; left:0; top:50%; height:2px; transform:translateY(-50%); background:var(--red); width:0; }
+.player-bar .knob{ position:absolute; top:50%; left:0; width:9px; height:9px; border-radius:50%; background:var(--brass); transform:translate(-50%,-50%); }
+.player-list{ list-style:none; margin:14px 0 0; padding:0; max-height:300px; overflow:auto; }
+.player-track{ display:flex; align-items:center; gap:12px; padding:11px 6px; border-bottom:1px solid var(--line); cursor:pointer; font-size:.92rem; color:var(--ink-2); transition:color .2s ease; }
+.player-track:last-child{ border-bottom:0; }
+.player-track:hover{ color:var(--brass); }
+.player-track .num{ font-family:var(--mono); font-size:.7rem; color:var(--brass); width:1.5em; flex:none; }
+.player-track .tname{ flex:1; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.player-track .tdur{ font-family:var(--mono); font-size:.7rem; color:var(--ink-2); flex:none; }
+.player-track.is-current{ color:var(--red); }
+.player-track.is-current .num{ color:var(--red); }
+.player-credit{ font-family:var(--mono); font-size:.66rem; letter-spacing:.12em; margin-top:16px; color:var(--ink-2); }
+.player-credit a{ color:var(--ink-2); text-decoration:none; }
+.player-credit a:hover{ color:var(--red); }
 
-@media (max-width:820px){ .hero-grid{ grid-template-columns:1fr; } .sc-card{ order:-1; margin-bottom:18px; } }
+/* Volume */
+.player-volume{ display:flex; align-items:center; gap:10px; margin-top:14px; }
+.player-vol-icon{ flex:none; width:16px; height:16px; color:var(--brass); cursor:pointer; }
+.player-vol-icon svg{ width:16px; height:16px; }
+.player-vol-slider{ flex:1; position:relative; height:14px; cursor:pointer; }
+.player-vol-slider::before{ content:""; position:absolute; left:0; right:0; top:50%; height:2px; transform:translateY(-50%); background:var(--line-2); }
+.player-vol-slider .vol-fill{ position:absolute; left:0; top:50%; height:2px; transform:translateY(-50%); background:var(--brass); width:70%; }
+.player-vol-slider .vol-knob{ position:absolute; top:50%; left:70%; width:8px; height:8px; border-radius:50%; background:var(--brass); transform:translate(-50%,-50%); transition:transform .15s ease; }
+.player-vol-slider:hover .vol-knob{ transform:translate(-50%,-50%) scale(1.3); }
+.player-vol-pct{ font-family:var(--mono); font-size:.66rem; color:var(--ink-2); width:2.5em; text-align:right; flex:none; }
+
+/* Visualizer */
+.player-viz{ display:flex; align-items:flex-end; gap:2px; height:22px; margin-left:auto; }
+.player-viz .bar{ width:3px; background:var(--brass); border-radius:1px; transition:height .15s ease; }
+.player.is-playing .player-viz .bar{ animation: vizBar 0.8s ease-in-out infinite alternate; }
+.player-viz .bar:nth-child(1){ height:6px; animation-delay:0s; }
+.player-viz .bar:nth-child(2){ height:12px; animation-delay:.1s; }
+.player-viz .bar:nth-child(3){ height:8px; animation-delay:.2s; }
+.player-viz .bar:nth-child(4){ height:16px; animation-delay:.3s; }
+.player-viz .bar:nth-child(5){ height:10px; animation-delay:.15s; }
+.player-viz .bar:nth-child(6){ height:14px; animation-delay:.25s; }
+.player-viz .bar:nth-child(7){ height:6px; animation-delay:.05s; }
+@keyframes vizBar{ 0%{ height:4px; } 100%{ height:20px; } }
+.player:not(.is-playing) .player-viz .bar{ height:4px; }
+
+/* Player controls row */
+.player-controls{ display:flex; align-items:center; gap:12px; margin-top:14px; }
+.player-skip{ flex:none; width:32px; height:32px; border-radius:50%; border:1px solid var(--line-2); background:transparent; color:var(--ink-2); display:grid; place-items:center; cursor:pointer; padding:0; transition:background .25s ease, color .25s ease, border-color .25s ease; }
+.player-skip:hover{ background:var(--brass); color:var(--paper); border-color:var(--brass); }
+.player-skip svg{ width:12px; height:12px; }
+.player-shuffle{ flex:none; width:32px; height:32px; border-radius:50%; border:1px solid var(--line-2); background:transparent; color:var(--ink-2); display:grid; place-items:center; cursor:pointer; padding:0; transition:background .25s ease, color .25s ease, border-color .25s ease; }
+.player-shuffle:hover{ background:var(--brass); color:var(--paper); border-color:var(--brass); }
+.player-shuffle.is-active{ border-color:var(--red); color:var(--red); }
+.player-shuffle svg{ width:12px; height:12px; }
+
+@media (max-width:820px){ .hero-grid{ grid-template-columns:1fr; } .player{ order:-1; margin-bottom:18px; } }
 
 /* Featured work */
 .feature{ border:1px solid var(--line-2); background:var(--paper-2); padding:clamp(24px,4vw,44px); }
@@ -225,10 +274,31 @@ footer .note{ font-family:var(--mono); font-size:.68rem; letter-spacing:.12em; c
         </div>
       </div>
 
-      <div class="sc-card reveal">
-        <div class="sc-head"><span>Now Playing</span><span class="name">The Skeletons</span></div>
-        <iframe class="sc-frame" width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay; encrypted-media" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%253Atracks%253A2417207997&color=%23e7dece&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"></iframe>
-        <div class="sc-credit"><a href="https://soundcloud.com/m-24-980402162" title="Marci Oltvai" target="_blank">Marci Oltvai</a> · <a href="https://soundcloud.com/m-24-980402162/the-skeletons" title="The Skeletons" target="_blank">The Skeletons</a></div>
+      <div class="player reveal" data-type="track">
+        <iframe id="sc-track" class="player-engine" allow="autoplay" loading="eager" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/2417207997&color=%23e7dece&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false&visual=true"></iframe>
+        
+        <div class="player-top">
+          <button class="player-btn" type="button" aria-label="Play">
+            <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="6,3 20,12 6,21"/></svg>
+          </button>
+          <div class="player-meta">
+            <div class="player-label">Now Playing</div>
+            <div class="player-title">The Skeletons</div>
+          </div>
+          <div class="player-viz">
+            <div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div>
+          </div>
+        </div>
+        <div class="player-bar"><div class="fill"></div><div class="knob"></div></div>
+        <div class="player-volume">
+          <div class="player-vol-icon" aria-label="Volume">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 9v6h4l5 5V4L7 9H3z"/><path d="M16 8.5c0 1.7-1 3.2-2.5 3.8v-7.6c1.5.6 2.5 2.1 2.5 3.8z"/></svg>
+          </div>
+          <div class="player-vol-slider"><div class="vol-fill"></div><div class="vol-knob"></div></div>
+          <div class="player-vol-pct">70%</div>
+        </div>
+        <div class="player-time" style="margin-top:10px"><span class="cur">0:00</span> / <span class="dur">0:00</span></div>
+        <div class="player-credit"><a href="https://soundcloud.com/m-24-980402162" target="_blank" rel="noopener">Márton Oltvai</a> · <a href="https://soundcloud.com/m-24-980402162/the-skeletons" target="_blank" rel="noopener">The Skeletons</a></div>
       </div>
     </div>
   </section>
@@ -238,10 +308,40 @@ footer .note{ font-family:var(--mono); font-size:.68rem; letter-spacing:.12em; c
 
     <img class="cfc-img reveal" src="CFC_horizontal.png" alt="Candies for Cara" width="600">
 
-    <div class="sc-card album reveal">
-      <div class="sc-head"><span>Full Album</span><span class="name">Candies for Cara (Soundtrack)</span></div>
-      <iframe class="sc-frame" width="100%" height="450" scrolling="no" frameborder="no" allow="autoplay; encrypted-media" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/soundcloud%253Aplaylists%253A2312461485&color=%23e7dece&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"></iframe>
-      <div class="sc-credit"><a href="https://soundcloud.com/m-24-980402162" title="Marci Oltvai" target="_blank">Marci Oltvai</a> · <a href="https://soundcloud.com/m-24-980402162/sets/candies-for-cara" title="Candies for Cara (Soundtrack)" target="_blank">Candies for Cara (Soundtrack)</a></div>
+    <div class="player album reveal" data-type="playlist">
+      <iframe id="sc-album" class="player-engine" allow="autoplay" loading="eager" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/2312461485&color=%23e7dece&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false&visual=true"></iframe>
+      
+      <div class="player-top">
+        <button class="player-btn" type="button" aria-label="Play">
+          <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="6,3 20,12 6,21"/></svg>
+        </button>
+        <div class="player-meta">
+          <div class="player-label">Full Soundtrack</div>
+          <div class="player-title">Candies for Cara (Soundtrack)</div>
+        </div>
+        <div class="player-viz">
+          <div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div>
+        </div>
+      </div>
+      <div class="player-bar"><div class="fill"></div><div class="knob"></div></div>
+      <div class="player-controls">
+        <button class="player-skip player-prev" type="button" aria-label="Previous track">
+          <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="18,3 6,12 18,21"/><rect x="4" y="3" width="2" height="18"/></svg>
+        </button>
+        <button class="player-skip player-next" type="button" aria-label="Next track">
+          <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="6,3 18,12 6,21"/><rect x="18" y="3" width="2" height="18"/></svg>
+        </button>
+        <div class="player-volume">
+          <div class="player-vol-icon" aria-label="Volume">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 9v6h4l5 5V4L7 9H3z"/><path d="M16 8.5c0 1.7-1 3.2-2.5 3.8v-7.6c1.5.6 2.5 2.1 2.5 3.8z"/></svg>
+          </div>
+          <div class="player-vol-slider"><div class="vol-fill"></div><div class="vol-knob"></div></div>
+          <div class="player-vol-pct">70%</div>
+        </div>
+      </div>
+      <div class="player-time" style="margin-top:10px"><span class="cur">0:00</span> / <span class="dur">0:00</span></div>
+      <ul class="player-list"></ul>
+      <div class="player-credit"><a href="https://soundcloud.com/m-24-980402162" target="_blank" rel="noopener">Márton Oltvai</a> · <a href="https://soundcloud.com/m-24-980402162/sets/candies-for-cara" target="_blank" rel="noopener">Candies for Cara (Soundtrack)</a></div>
     </div>
 
     <div class="feature reveal">
@@ -317,6 +417,8 @@ footer .note{ font-family:var(--mono); font-size:.68rem; letter-spacing:.12em; c
   <p class="note">© 2026 Márton Oltvai · Student composer · Candies for Cara</p>
 </footer>
 
+<script src="https://w.soundcloud.com/player/api.js"></script>
+<script src="player.js"></script>
 <script>
 (function(){
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -372,7 +474,6 @@ footer .note{ font-family:var(--mono); font-size:.68rem; letter-spacing:.12em; c
     }, 600);
     return false;
   };
-
 })();
 </script>
 </body>

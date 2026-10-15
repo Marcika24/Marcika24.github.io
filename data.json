@@ -1,0 +1,57 @@
+{
+  "featuredTrack": {
+    "title": "The Skeletons",
+    "artist": "Márton Oltvai",
+    "soundcloudWidgetUrl": "https://api.soundcloud.com/tracks/2417207997",
+    "soundcloudPublicUrl": "https://soundcloud.com/m-24-980402162/the-skeletons"
+  },
+  "projects": [
+    {
+      "id": "candies-for-cara",
+      "metaLine": "Game · Game Jam 2024",
+      "badge": "Composer",
+      "title": "Candies for Cara",
+      "description": "A short game built for a game jam. I composed the score — a bright, playful melody that carries the mood through the levels, with light percussion and a warm synth pad under the main theme. Listen to the full soundtrack above.",
+      "tags": [
+        "Game Score",
+        "Melody",
+        "Synth",
+        "Percussion"
+      ],
+      "image": {
+        "src": "CFC_horizontal.png",
+        "alt": "Candies for Cara"
+      },
+      "player": {
+        "type": "playlist",
+        "label": "Full Soundtrack",
+        "title": "Candies for Cara (Soundtrack)",
+        "soundcloudWidgetUrl": "https://api.soundcloud.com/playlists/2312461485",
+        "soundcloudPublicUrl": "https://soundcloud.com/m-24-980402162/sets/candies-for-cara"
+      }
+    },
+    {
+      "id": "future-project-example",
+      "metaLine": "Short Film · Student Project",
+      "badge": "Composer & Sound Design",
+      "title": "A Képzeletbeli Film",
+      "description": "Egy készülő rövidfilm zenéje sötétebb vonósokkal és atmoszférikus zörejekkel. Jelenleg a vázlatok és a főtéma kidolgozása zajlik.",
+      "tags": [
+        "Film Score",
+        "Strings",
+        "Dark Ambient"
+      ],
+      "image": {
+        "src": "placeholder_image.png",
+        "alt": "Jelenetkép a filmből"
+      },
+      "player": {
+        "type": "track",
+        "label": "Main Theme",
+        "title": "Képzeletbeli Főtéma",
+        "soundcloudWidgetUrl": "https://api.soundcloud.com/tracks/123456789",
+        "soundcloudPublicUrl": "https://soundcloud.com/m-24-980402162/kepzeletbeli-fotema"
+      }
+    }
+  ]
+}
