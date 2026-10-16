@@ -386,7 +386,7 @@ footer .note{ font-family:var(--mono); font-size:.68rem; letter-spacing:.12em; c
       <div>
         <p class="eyebrow reveal">About</p>
         <h2 class="sec reveal">Me</h2>
-        <p class="lead reveal">I'm a student of composition, learning to write for picture and for play. Right now I'm focused on game scores and short film cues — building themes, learning how music moves a scene, and recording small pieces as I go. This site grows as the work grows.</p>
+        <p class="lead reveal">I'm a student of composition, learning to write for picture. Right now I'm focused on game scores and short film cues — building themes, learning how to take a scene to another level by my music, and recording small pieces as I go. This site grows as my work does.</p>
         <ul class="bullet reveal">
           <li>Studying composition</li>
           <li>Writing themes &amp; motifs</li>
@@ -410,18 +410,18 @@ footer .note{ font-family:var(--mono); font-size:.68rem; letter-spacing:.12em; c
           <p class="eyebrow reveal">Contact</p>
           <h2 class="sec reveal">Work With Me</h2>
           <div class="social-links reveal">
+            <a href="#" onclick="copyEmail(event)" aria-label="Copy Email" title="Copy email address">
+              <i class="fa-solid fa-envelope"></i>
+            </a>
             <a href="https://instagram.com/marcimusicyo" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
               <i class="fa-brands fa-instagram"></i>
             </a>
             <a href="https://discord.com/users/marcimusicyo" target="_blank" rel="noopener noreferrer" aria-label="Discord">
               <i class="fa-brands fa-discord"></i>
             </a>
-            <a href="#" onclick="copyEmail(event)" aria-label="Copy Email" title="Copy email address">
-              <i class="fa-solid fa-envelope"></i>
-            </a>
             <a href="https://facebook.com/oltvaimarci" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
               <i class="fa-brands fa-facebook"></i>
-              </a>
+            </a>
         </div>
         </div>
       </div>
@@ -445,7 +445,7 @@ footer .note{ font-family:var(--mono); font-size:.68rem; letter-spacing:.12em; c
 <script>
   window.copyEmail = function(e) {
     e.preventDefault(); // Prevents the page from jumping to the top
-    const email = "marci.oltvai@gmail.com"; // Replace with your actual email
+    const email = "info@martonoltvai.hu"; // Replace with your actual email
     
     navigator.clipboard.writeText(email).then(() => {
       // Optional: Give the user some quick feedback
