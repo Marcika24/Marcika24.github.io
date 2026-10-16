@@ -245,6 +245,27 @@ footer .note{ font-family:var(--mono); font-size:.68rem; letter-spacing:.12em; c
   .btn{ transition:none; }
   #cursor{ display:none; }
 }
+
+/* Container for the icons */
+.social-links {
+  display: flex;
+  gap: 24px; /* Spacing between icons */
+  margin-top: 16px;
+}
+
+/* Base style and size for the icons */
+.social-links a {
+  color: var(--ink-2); /* Matches your site's secondary text color */
+  font-size: 2.5rem; /* Adjust this value to change the size */
+  transition: color 0.3s ease, transform 0.3s ease;
+  display: inline-block;
+}
+
+/* Hover effects */
+.social-links a:hover {
+  color: var(--red); /* Changes to your theme's red accent color */
+  transform: translateY(-4px) scale(1.1); /* Slight pop-up and grow effect */
+}
 </style>
 </head>
 <body>
@@ -320,7 +341,7 @@ footer .note{ font-family:var(--mono); font-size:.68rem; letter-spacing:.12em; c
         </button>
         <div class="player-meta">
           <div class="player-label">Full Soundtrack</div>
-          <div class="player-title">Candies for Cara (Soundtrack)</div>
+          <div class="player-title">Candies for Cara ()</div>
         </div>
         <div class="player-viz">
           <div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div>
@@ -388,22 +409,21 @@ footer .note{ font-family:var(--mono); font-size:.68rem; letter-spacing:.12em; c
         <div>
           <p class="eyebrow reveal">Contact</p>
           <h2 class="sec reveal">Work With Me</h2>
-          <p class="lead reveal">Have a game jam, a student film, or a small project that needs music? Send me a note — I read every message and reply personally.</p>
+          <div class="social-links reveal">
+            <a href="https://instagram.com/marcimusicyo" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+              <i class="fa-brands fa-instagram"></i>
+            </a>
+            <a href="https://discord.com/users/marcimusicyo" target="_blank" rel="noopener noreferrer" aria-label="Discord">
+              <i class="fa-brands fa-discord"></i>
+            </a>
+            <a href="#" onclick="copyEmail(event)" aria-label="Copy Email" title="Copy email address">
+              <i class="fa-solid fa-envelope"></i>
+            </a>
+            <a href="https://facebook.com/oltvaimarci" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+              <i class="fa-brands fa-facebook"></i>
+              </a>
         </div>
-        <form class="staff reveal" onsubmit="return sendMsg(event)">
-          <div class="field-row">
-            <div class="field"><label for="name">Name</label><input id="name" name="name" required placeholder="Your name"></div>
-            <div class="field"><label for="email">Email</label><input id="email" name="email" type="email" required placeholder="you@example.com"></div>
-          </div>
-          <div class="field"><label for="type">Project type</label>
-            <select id="type" name="type">
-              <option>Game</option><option>Game Jam</option><option>Student Film</option><option>Other</option>
-            </select>
-          </div>
-          <div class="field"><label for="msg">The brief</label><textarea id="msg" name="msg" required placeholder="Tell me about the project…"></textarea></div>
-          <div style="margin-top:26px"><button class="btn btn--solid" type="submit" data-magnetic>Send</button></div>
-          <p id="formStatus" style="font-family:var(--mono); font-size:.72rem; letter-spacing:.12em; color:var(--red); margin-top:14px; min-height:1em;"></p>
-        </form>
+        </div>
       </div>
     </div>
   </section>
@@ -422,6 +442,19 @@ footer .note{ font-family:var(--mono); font-size:.68rem; letter-spacing:.12em; c
 
 <script src="https://w.soundcloud.com/player/api.js"></script>
 <script src="player.js"></script>
+<script>
+  window.copyEmail = function(e) {
+    e.preventDefault(); // Prevents the page from jumping to the top
+    const email = "marci.oltvai@gmail.com"; // Replace with your actual email
+    
+    navigator.clipboard.writeText(email).then(() => {
+      // Optional: Give the user some quick feedback
+      alert("Email copied to clipboard: " + email);
+    }).catch(err => {
+      console.error('Failed to copy text: ', err);
+    });
+  };
+</script>
 <script>
 (function(){
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
